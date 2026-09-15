@@ -28,8 +28,8 @@ Lượt 1: Kiểm tra ID, phát hiện các trường hợp ID bị đổi hoặ
 Lượt 2: Kiểm tra frame đầu/cuối để xem xe xuất hiện hoặc rời khỏi ảnh có được xử lý đúng không.
 Lượt 3: Kiểm tra frame giữa để xem bbox có bị lệch hoặc trôi khỏi xe không.
 
-Kiểm chéo với: `SoloSolo`. Chi tiết ở `reports/review_partner.md`.
-Số lỗi bạn tìm được trong bản của bạn ấy: `Solo
+Kiểm chéo với: `Solo`. Chi tiết ở `reports/review_partner.md`.
+
 
 
 ## 3. Pre-gold lock và chấm trước/sau rework
@@ -110,26 +110,15 @@ Tuy nhiên, số ID switch của hai model đều là `2`, nên ReID chưa loạ
 
 ## 5. Phân tích — năm câu hỏi
 
-**1. MOTA của bạn cao hơn hay thấp hơn IDF1? Nếu MOTA cao mà IDF1 thấp thì điều đó nói gì, và vì sao MOTA không phạt nặng lỗi ID?**
+**1.** MOTA `0.873` thấp hơn IDF1 `0.940`. MOTA không phạt lỗi ID mạnh bằng IDF1.
 
-`...`
+**2.** ByteTrack: IDF1 `0.875`, AssA `0.776`, IDSW `2`. ReID: IDF1 `0.900`, AssA `0.820`, IDSW `2`. ReID tốt hơn ở IDF1 và AssA, nhưng IDSW không đổi. Ví dụ frame `87`, ReID vẫn đổi ID `17 → 18`. Không thể kết luận riêng do ReID vì hai tracker khác nhau.
 
-**2. ByteTrack control và BoT-SORT + ReID treatment khác nhau thế nào ở IDF1, AssA và IDSW? Dẫn một frame sequence để giải thích treatment tốt hơn, tệ hơn hoặc không đổi đáng kể. Nhắc rõ đây không cô lập causal effect của ReID vì hai tracker implementation khác.**
+**3.** DetA tăng `0.649 → 0.711`, FN giảm `54 → 26`, nhưng FP tăng `88 → 91`. Vẫn còn cả lỗi bbox/detection và association.
 
-`...`
+**4.** Frame `87`, track `5`: nhãn của tôi giữ ID, ReID đổi `17 → 18`, nên model bị ID switch.
 
-**3. DetA, FP và FN đổi thế nào? Lỗi còn lại là detector hay association?**
-
-`...`
-
-**4. Một chỗ bạn đúng và ReID sai (frame, ID, vì sao):**
-
-`...`
-
-**5. Một chỗ ReID làm bạn xem lại annotation (frame, ID, vì sao), hoặc lý do evidence cho thấy model sai:**
-
-`...`
-
+**5.** Frame `113`, track `6`: ReID đổi `24 → 31`. Tôi kiểm tra lại annotation và thấy không cần đổi ID, nên evidence nghiêng về model sai.
 
 ## 6. Nếu phải gán thêm 10 clip nữa
 
